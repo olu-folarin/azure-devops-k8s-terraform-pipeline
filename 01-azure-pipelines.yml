@@ -10,7 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world. I changed this after runnig the first pipeline!
+- script: echo Hello, world. I changed !
   displayName: 'Run a one-line script'
 
 - script: |
