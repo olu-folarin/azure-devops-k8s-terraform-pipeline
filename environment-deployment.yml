@@ -12,7 +12,7 @@ strategy:
       operatingSystem: 'windows-latest'
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: $(operatingSystem)
 
 steps:
 - script: echo This pipeline is running on $(operatingSystem)
