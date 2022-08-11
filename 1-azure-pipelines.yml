@@ -21,6 +21,14 @@ jobs:
       echo See https://aka.ms/yaml
     displayName: 'Run a multi-line script'
 - job: job2
+# specifying dependencies on a job using dependsOn
+  dependsOn: job1!
+  steps:
+  - script: echo here is the second job.
+    displayName: 'Run a one-line script'
+- job: job3
+# specifying dependencies on a job using dependsOn
+  dependsOn: job2!
   steps:
   - script: echo here is the second job.
     displayName: 'Run a one-line script'
