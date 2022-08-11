@@ -1,5 +1,7 @@
 # Currency Exchange Micro Service - H2
 
+The error messages on my pipelines are as a result of a withdrawal of access to Parallelism and grants by Azure. If my request for a grant gets approved, my builds will be reran and the error messages will be removed automatically.
+
 Run com.in28minutes.microservices.currencyconversionservice.CurrencyConversionServiceApplicationH2 as a Java Application.
 
 ## Resources
