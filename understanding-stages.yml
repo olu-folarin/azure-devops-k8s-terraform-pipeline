@@ -23,16 +23,18 @@ stages:
     - bash: mvn -version
     - bash: java -version
     - bash: echo $(Build.ArtifactStagingDirectory)
+    - bash: echo $(System.DefaultWorkingDirectory)
     # content before the copy task
     - bash: ls -R $(Build.ArtifactStagingDirectory)
+    
     - task: CopyFiles@2
       inputs:
-        SourceFolder: '$(Build.BuildId)'
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
         Contents: |
-          **/*.yaml
           **/*.tf
+          **/*.yaml
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
-       
+
     # content after copy
     - bash: ls -R $(Build.ArtifactStagingDirectory)
       
