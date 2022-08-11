@@ -5,32 +5,42 @@ pool:
   vmImage: ubuntu-latest
 
 # several stages, each with its own jobs and steps
+# build can also be instantiated directly below a stage, before steps.
 stages:
 - stage: Build
   jobs:
   - job: FirstJob
     steps:
     - bash: echo FirstJob Build
+    # this will inject the variable into your build
+    - bash: echo $(PipeLineLevelVariable)
   - job: SecondJob
     steps:
     - bash: echo SecondJob Build
 - stage: DevDeploy
+# it can also be used at the stage level to reveal the environment u in
+  variables:
+    environment: Dev
   dependsOn: Build
   jobs:
   - job: FirstDeployment
     steps:
-    - bash: echo FirstDeployment
+    - bash: echo $(environment)FirstDeployment
 - stage: QADeploy
+  variables:
+    environment: QA
   dependsOn: DevDeploy
   jobs:
   - job: FirstQA
     steps:
-    - bash: echo FirstQA
+    - bash: echo $(environment)FirstQA
 - stage: ProdDeploy
+  variables:
+    environment: Prod
   dependsOn:
   - Devdeploy
   - QADeploy
   jobs:
   - job: ProdDeployment
     steps:
-    - bash: echo Production Deployment
+    - bash: echo $(environment) Production Deployment
