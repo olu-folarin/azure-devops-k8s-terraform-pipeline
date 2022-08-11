@@ -6,6 +6,7 @@ pool:
 
 # several stages, each with its own jobs and steps
 # build can also be instantiated directly below a stage, before steps.
+# If there are too many variables in your pipeline, your pipeline will take longer to run.
 stages:
 - stage: Build
   jobs:
@@ -14,33 +15,37 @@ stages:
     - bash: echo FirstJob Build
     # this will inject the variable into your build
     - bash: echo $(PipeLineLevelVariable)
-  - job: SecondJob
-    steps:
-    - bash: echo SecondJob Build
-- stage: DevDeploy
-# it can also be used at the stage level to reveal the environment u in
-  variables:
-    environment: Dev
-  dependsOn: Build
-  jobs:
-  - job: FirstDeployment
-    steps:
-    - bash: echo $(environment)FirstDeployment
-- stage: QADeploy
-  variables:
-    environment: QA
-  dependsOn: DevDeploy
-  jobs:
-  - job: FirstQA
-    steps:
-    - bash: echo $(environment)FirstQA
-- stage: ProdDeploy
-  variables:
-    environment: Prod
-  dependsOn:
-  - Devdeploy
-  - QADeploy
-  jobs:
-  - job: ProdDeployment
-    steps:
-    - bash: echo $(environment) Production Deployment
+    - bash: echo $(Build.SourceDirectory)
+    - bash: echo $(Build.Reason)
+    - bash: echo $(Build.BuildId)
+    - bash: echo $(Build.Repository.ID)
+  # - job: SecondJob
+  #   steps:
+  #   - bash: echo SecondJob Build
+# - stage: DevDeploy
+# # it can also be used at the stage level to reveal the environment u in
+#   variables:
+#     environment: Dev
+#   dependsOn: Build
+#   jobs:
+#   - job: FirstDeployment
+#     steps:
+#     - bash: echo $(environment)FirstDeployment
+# - stage: QADeploy
+#   variables:
+#     environment: QA
+#   dependsOn: DevDeploy
+#   jobs:
+#   - job: FirstQA
+#     steps:
+#     - bash: echo $(environment)FirstQA
+# - stage: ProdDeploy
+#   variables:
+#     environment: Prod
+#   dependsOn:
+#   - Devdeploy
+#   - QADeploy
+#   jobs:
+#   - job: ProdDeployment
+#     steps:
+#     - bash: echo $(environment) Production Deployment
