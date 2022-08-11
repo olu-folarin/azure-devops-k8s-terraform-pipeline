@@ -18,7 +18,24 @@ stages:
     - bash: echo $(Build.SourceDirectory)
     - bash: echo $(Build.Reason)
     - bash: echo $(Build.BuildId)
-    - bash: echo $(Build.Repository.ID)
+    - bash: python --version
+    - bash: node --version
+    - bash: mvn -version
+    - bash: java -version
+    - bash: echo $(Build.ArtifactStagingDirectory)
+    # content before the copy task
+    - bash: ls -R $(Build.ArtifactStagingDirectory)
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Build.Reason)'
+        Contents: |
+          **/*.yaml
+          **/*.tf
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    # content after copy
+    - bash: ls -R $(Build.ArtifactStagingDirectory)
+      
+
   # - job: SecondJob
   #   steps:
   #   - bash: echo SecondJob Build
