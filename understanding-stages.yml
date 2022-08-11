@@ -37,7 +37,13 @@ stages:
 
     # content after copy
     - bash: ls -R $(Build.ArtifactStagingDirectory)
-      
+
+      # sharing artifacts across different build stages in the pipeline
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
 
   # - job: SecondJob
   #   steps:
