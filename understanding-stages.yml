@@ -27,11 +27,12 @@ stages:
     - bash: ls -R $(Build.ArtifactStagingDirectory)
     - task: CopyFiles@2
       inputs:
-        SourceFolder: '$(Build.Reason)'
+        SourceFolder: '$(Build.BuildId)'
         Contents: |
           **/*.yaml
           **/*.tf
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
+       
     # content after copy
     - bash: ls -R $(Build.ArtifactStagingDirectory)
       
